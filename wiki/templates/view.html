@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<p><a href="{{ url_for('edit_page', title=title) }}" class="edit-button">Edit this page</a></p>
+<h2>{{ title }}</h2>
+
+<article style="display: flex; gap: 20px;">
+    <!-- Table of Contents (TOC) -->
+    <div id="toc" style="width: 200px; font-size: 0.9rem; position: sticky; top: 20px; max-height: 80vh; overflow-y: auto;">
+        <h3>Table of Contents</h3>
+        <ul>
+            {% for level, header in toc %}
+                <li style="margin-left: {{ level * 10 }}px;"><a href="#{{ header | replace(' ', '_') }}">{{ header }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div style="flex: 1;">
+        <!-- Page content rendered here -->
+        <div>{{ content | safe }}</div>
+    </div>
+</article>
+{% endblock %}

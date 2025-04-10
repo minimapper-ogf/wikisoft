@@ -1,0 +1,297 @@
+/* Reset + Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f5f5f5;
+    color: #1a1a1a;
+    line-height: 1.6;
+}
+
+a {
+    color: #0077cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Header + Navigation */
+header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.5rem;
+}
+
+nav a {
+    margin-right: 20px;
+    font-weight: 500;
+}
+
+/* Main Container */
+main {
+    max-width: 1000px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Article Content */
+article {
+    padding: 10px 0;
+}
+
+h2, h3, h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+ul, ol {
+    margin: 1rem 0 1rem 2rem;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+}
+
+th, td {
+    border: 1px solid #ccc;  /* Light gray border */
+    padding: 8px 12px;  /* Padding to make content readable */
+    text-align: left;  /* Align content to the left */
+    vertical-align: middle; /* Vertical alignment to keep rows consistent */
+}
+
+th {
+    background-color: #f0f0f0;  /* Light background for header */
+    font-weight: bold;  /* Bold headers */
+}
+
+/* Forms */
+textarea {
+    width: 100%;
+    height: 300px;
+    font-family: monospace;
+    font-size: 1rem;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0077cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005fa3;
+}
+
+/* Page List */
+ul.page-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.page-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 30px;
+}
+
+/* Styling for headers */
+h1 {
+    font-size: 2em;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 1.75em;
+    margin-top: 15px;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+h4 {
+    font-size: 1.25em;
+    margin-top: 8px;
+}
+
+h5 {
+    font-size: 1.1em;
+    margin-top: 5px;
+}
+
+h6 {
+    font-size: 1em;
+    margin-top: 3px;
+}
+
+/* Styling for bold and italic */
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+/* Lists styling */
+ul, ol {
+    margin: 10px 0;
+}
+
+ul li, ol li {
+    margin: 5px 0;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;  /* Collapse borders to eliminate gaps between cells */
+    margin: 1rem 0;  /* Add some margin between tables and other content */
+    table-layout: fixed; /* Ensures columns maintain equal width */
+}
+
+th, td {
+    border: 1px solid #ddd;  /* Light border color */
+    padding: 10px;  /* Consistent padding for cell contents */
+    text-align: left;  /* Align text to the left */
+    vertical-align: middle;  /* Ensure all content aligns properly */
+}
+
+/* Remove any space between rows */
+th, td {
+    border-spacing: 0;
+}
+
+th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+/* Optional: For alternating row shading */
+tr:nth-child(even) {
+    background-color: #f7f7f7;  /* Subtle shading for readability */
+}
+
+/* Images and Audio */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.edit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0077cc;
+    color: white;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    margin-bottom: 20px; /* Space between button and the title */
+}
+
+.edit-button:hover {
+    background-color: #005fa3;
+}
+
+#toc {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 0.1rem; /* Smaller font */
+    width: 200px; /* Make the TOC more compact */
+    position: sticky;
+    top: 20px; /* Sticky on top */
+    max-height: 80vh; /* Prevent it from being too tall */
+    overflow-y: auto; /* Add scrolling for overflow */
+}
+
+#toc h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+#toc ul {
+    padding-left: 20px;
+}
+
+#toc li {
+    margin: 5px 0;
+}
+
+#toc a {
+    text-decoration: none;
+    color: #0077cc;
+}
+
+#toc a:hover {
+    text-decoration: underline;
+}
+
+article {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+#content {
+    flex: 1;
+}
+
+.edit-button {
+    margin-bottom: 10px;
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #0077cc;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.edit-button:hover {
+    background-color: #005fa3;
+}

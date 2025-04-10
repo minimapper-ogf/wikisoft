@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }} — MyWiki</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1><a href="{{ url_for('home') }}">MyWiki</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about">About</a>
+                <a href="/pages">All Pages</a>
+                <!-- Search Bar -->
+                <form action="/search" method="get" id="search-form">
+                    <input type="text" name="query" placeholder="Search..." id="search-bar" required>
+                    <button type="submit">Search</button>
+                </form>
+            </nav>
+        </header>
+        
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        &copy; {{ current_year }} MyWiki. Powered by Flask.
+    </footer>
+</body>
+</html>
