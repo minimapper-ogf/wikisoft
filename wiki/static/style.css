@@ -364,3 +364,10 @@ article {
 .edit-button:hover {
     background-color: #005fa3;
 }
+
+.categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: #f1f1f1;
+}
