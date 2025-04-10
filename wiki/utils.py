@@ -6,9 +6,19 @@ def get_page_path(title):
     safe_title = title.replace(" ", "_")
     return os.path.join(DATA_DIR, f"{safe_title}.txt")
 
+import os
 import re
-import hashlib
 
+# The function to extract categories from the page content
+def extract_categories(text):
+    categories = []
+    pattern = r'\[\[Category:(.*?)\]\]'  # Pattern to match [[Category:CategoryName]]
+    matches = re.findall(pattern, text)
+    for match in matches:
+        categories.append(match.strip())
+    return categories
+
+# Modify markdown_to_html to extract categories and add to the return
 def markdown_to_html(text):
     """Convert custom markdown to HTML."""
     toc = []  # List to store TOC entries
@@ -63,8 +73,25 @@ def markdown_to_html(text):
     # Convert custom table syntax {table}...{/table} to <table>...</table>
     text = re.sub(r'\{table\}(.*?)\{/table\}', lambda m: convert_table_to_html(m.group(1)), text, flags=re.DOTALL)
 
-    # Convert plain text tables to HTML
-    return text, toc
+    categories = extract_categories(text)  # Extract categories from the text
+
+    # Clean text of category links
+    text = re.sub(r'\[\[Category:.*?\]\]', '', text)  # Remove category tags from content
+
+    return text, toc, categories  # Return categories along with content and TOC
+
+def list_pages_by_category(category):
+    """List all pages that are part of the given category."""
+    pages_in_category = []
+    for filename in os.listdir(DATA_DIR):
+        if filename.endswith(".txt"):
+            path = os.path.join(DATA_DIR, filename)
+            with open(path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                categories = extract_categories(content)
+                if category in categories:
+                    pages_in_category.append(filename[:-4].replace("_", " "))  # Add page title
+    return pages_in_category
 
 def convert_table_to_html(table_content):
     """Converts custom table content to HTML table."""

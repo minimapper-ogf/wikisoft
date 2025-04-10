@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
-from utils import get_page_path, list_pages, search_pages, get_page_info, markdown_to_html
+from utils import get_page_path, list_pages, search_pages, get_page_info, markdown_to_html, list_pages_by_category
 import os
 from fuzzywuzzy import fuzz, process
 
@@ -30,10 +30,17 @@ def view_page(title):
     try:
         with open(get_page_path(title), 'r', encoding='utf-8') as f:
             content = f.read()
-        content, toc = markdown_to_html(content)  # Get content and TOC separately
+        content, toc, categories = markdown_to_html(content)  # Get content, TOC, and categories
     except FileNotFoundError:
         return redirect(url_for('edit_page', title=title))
-    return render_template("view.html", title=title, content=content, toc=toc, pages=list_pages())
+    
+    # Add categories to page context
+    return render_template("view.html", title=title, content=content, toc=toc, categories=categories, pages=list_pages())
+
+@app.route('/category/<category>')
+def view_category(category):
+    pages = list_pages_by_category(category)  # Get pages for the category
+    return render_template("category_page.html", category=category, pages=pages)
 
 @app.route('/edit/<title>', methods=['GET', 'POST'])
 def edit_page(title):

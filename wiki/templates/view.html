@@ -18,6 +18,18 @@
     <div style="flex: 1;">
         <!-- Page content rendered here -->
         <div>{{ content | safe }}</div>
+
+        <!-- Display categories -->
+        {% if categories %}
+        <div class="categories">
+            <h3>Categories:</h3>
+            <ul>
+                {% for category in categories %}
+                    <li><a href="{{ url_for('view_category', category=category) }}">[[Category:{{ category }}]]</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
     </div>
 </article>
 {% endblock %}
