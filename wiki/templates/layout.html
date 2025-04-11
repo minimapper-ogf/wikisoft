@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>{{ title }} — MyWiki</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
     <header>
@@ -13,6 +15,7 @@
             <a href="/about">About</a>
             <a href="/pages">All Pages</a>
             <a href="/upload">Upload</a>
+            <a href="/media-gallery">All Media</a>
     
             <!-- Search Bar -->
             <form action="/search" method="get" id="search-form">
@@ -22,12 +25,15 @@
     
             <!-- User Info -->
             {% if session.username %}
-                <span style="margin-left: 1em;">👤 Logged in as <strong>{{ session.username }}</strong></span>
+                <span style="margin-left: 1em;">👤 Logged in as 
+                    <strong><a href="{{ url_for('view_page', title='User:' + session.username) }}">{{ session.username }}</a></strong>
+                </span>
                 <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
                 <a href="{{ url_for('login') }}">Login</a>
                 <a href="{{ url_for('signup') }}">Sign Up</a>
             {% endif %}
+
         </nav>
     </header>    
 
@@ -36,7 +42,35 @@
     </main>
 
     <footer>
-        &copy; {{ current_year }} MyWiki. Powered by Flask.
+        &copy; 2025 MyWiki. Powered by Flask. v0.4.0-dev
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var mapElements = document.querySelectorAll('.wiki-map');
+            
+            mapElements.forEach(function(element) {
+                var mapData = element.getAttribute('data-map');
+                var coords = mapData.split(' ')[0]; // Extract coordinates from data attribute
+                var zoom = parseInt(mapData.split(' ')[1]);
+                var latLonArr = coords.split(':');
+    
+                // Initialize Leaflet map
+                var map = L.map(element).setView([parseFloat(latLonArr[0].split(',')[0]), parseFloat(latLonArr[0].split(',')[1])], zoom);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    
+                // Loop over the coordinates and add markers/lines as needed
+                latLonArr.forEach(function(point) {
+                    var latLon = point.split(',');
+                    var lat = parseFloat(latLon[0]);
+                    var lon = parseFloat(latLon[1]);
+    
+                    L.marker([lat, lon]).addTo(map)
+                        .bindPopup('Coordinates: ' + lat + ', ' + lon);
+                });
+            });
+        });
+    </script>
+    
 </body>
 </html>

@@ -9,7 +9,7 @@ import json
 app = Flask(__name__)
 app.secret_key = 'CREATE KEY WHEN  MAKING WIKI'  # Required for sessions
 app.config['UPLOAD_FOLDER'] = 'data/media'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB max
+app.config['MAX_CONTENT_LENGTH'] = 160 * 1024 * 1024  # 160 MB max
 
 DATA_DIR = "data/pages"
 MEDIA_DIR = "data/media"
@@ -131,6 +131,38 @@ def signup():
 
     return render_template("signup.html")
 
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    users = load_users()
+    user = users[session['username']]
+
+    if request.method == 'POST':
+        theme = request.form.get('theme')
+        user['theme'] = theme
+        with open(USERS_FILE, 'w') as f:
+            json.dump(users, f, indent=2)
+        flash("Theme updated successfully!", "success")
+        return redirect(url_for('settings'))
+
+    # Pass the current theme to the template (default to 'light' if not set)
+    current_theme = user.get('theme', 'light')
+    return render_template("settings.html", current_theme=current_theme)
+
+@app.route('/media-gallery')
+def media_gallery():
+    files = []
+    for filename in os.listdir(MEDIA_DIR):
+        filepath = os.path.join(MEDIA_DIR, filename)
+        size_kb = round(os.path.getsize(filepath) / 1024, 1)
+        file_type = filename.split('.')[-1].lower()
+        files.append({
+            'name': filename,
+            'url': url_for('serve_media', filename=filename),
+            'size_kb': size_kb,
+            'type': file_type,
+        })
+    return render_template('media_gallery.html', files=files)
 
 # ------------------ Auth Routes ------------------
 

@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>📂 Media Gallery</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 1em;">
+    {% for file in files %}
+    <div style="border: 1px solid #ccc; padding: 1em; width: 200px; text-align: center;">
+        {% if file.type in ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'] %}
+            <img src="{{ file.url }}" alt="{{ file.name }}" style="max-width: 100%;">
+        {% elif file.type in ['mp3', 'wav', 'ogg'] %}
+            <audio controls style="width: 100%;">
+                <source src="{{ file.url }}" type="audio/{{ file.type }}">
+            </audio>
+        {% elif file.type in ['mp4', 'webm'] %}
+            <video controls style="width: 100%;">
+                <source src="{{ file.url }}" type="video/{{ file.type }}">
+            </video>
+        {% else %}
+            <a href="{{ file.url }}">📄 {{ file.name }}</a>
+        {% endif %}
+        <div style="margin-top: 0.5em;">
+            <strong>{{ file.name }}</strong><br>
+            <small>{{ file.size_kb }} KB</small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
